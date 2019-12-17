@@ -1,0 +1,152 @@
+body {
+  font: 18px Arial, Helvetica, sans-serif;
+  background-image: linear-gradient(to right, #232323, #1b2432);
+  /*background-color: #1b2432;*/
+  color: #ffffff;
+}
+
+#titulo {
+  width: 40%;
+  height: auto;
+  margin: 4% auto;
+  text-align: center;
+}
+
+#login {
+  background-color: #485665; /* fundo */
+  width: 50%;
+  height: auto;
+  margin: -4% auto;
+  padding: 5px;
+  box-shadow: 9px 7px 5px rgba(255, 255, 255, 0.1);
+  border-radius: 5px;
+}
+
+#login img{
+  width: 20%;
+  height: 20%;
+  margin: auto 40%;
+}
+
+input {
+  font: 18px Arial, Helvetica, sans-serif;
+  color: #242021;
+  height: 5%;
+  padding: 2%;
+  width: 88%;
+  margin: 1%;
+  border: 1px solid #CCC;
+  border-radius: 5px;
+}
+
+button {
+  font: 18px Arial, Helvetica, sans-serif;
+  color: #FFF;
+  height: 45px;
+  padding: 2%;
+  background-color: #2f2e2f;
+  cursor: pointer;
+  width: 88%;
+  margin: 2% 4%;
+  border: 1px solid #CCC;
+  border-radius: 5px;
+}
+
+button:hover {
+  background-color: #242021;
+}
+
+footer {
+  color: #ffffff;
+}
+
+#login button:disabled{
+  background-color: #c6c6c6;
+  cursor: default;
+}
+
+#login h2 {
+ font: 18px Arial, Helvetica, sans-serif;
+  color: #FFF;
+  padding: 5px;
+  background-color: #900;
+  float: left;
+  text-align: center;
+  margin: 28px 0 10px 10px;
+  border: 1px solid #CCC;
+  border-radius: 5px; 
+}
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #485665;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  box-shadow: 9px 7px 5px rgba(255, 255, 255, 0.1);
+  width: 20%;
+  height: 55%;
+}
+
+/* The Close Button */
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+#content-wrapper {
+  padding-left: 224px
+}
+
+#accordionSidebar {
+  padding: 0px 10px;
+  color: #ffffff;
+}
+
+.sair {
+  color: red;
+}
+
+.btn-menu {
+  margin: 10px;
+}
+
+.img-maquina {
+  padding-right: 30px;
+  height: 150px;
+  width: 150px;
+}
+
+.menu-lateral {
+  padding: 15px 0px;
+  color: #ffffff;
+}
+
+.progress {
+  margin-top: -10px;
+  margin-bottom: 5px;
+}

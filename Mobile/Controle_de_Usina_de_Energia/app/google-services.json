@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "608031329940",
+    "firebase_url": "https://controle-de-usina-de-energia.firebaseio.com",
+    "project_id": "controle-de-usina-de-energia",
+    "storage_bucket": "controle-de-usina-de-energia.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:608031329940:android:9d621f979d60dcc4",
+        "android_client_info": {
+          "package_name": "aps.controledeusinadeenergia.com"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "608031329940-13prig1hbs116galghh7a7mtnmohi1fk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "aps.controledeusinadeenergia.com",
+            "certificate_hash": "b189505f2c5752e835e4ea8609c19c971b18e7a6"
+          }
+        },
+        {
+          "client_id": "608031329940-u116iruceoc7kbsuk1ikesau1t82p45q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAt0aNbY_18CfqsxOe31F_CaCpmJRltyvU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "608031329940-u116iruceoc7kbsuk1ikesau1t82p45q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

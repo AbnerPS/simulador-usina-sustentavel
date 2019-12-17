@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="description" content="Controle de Usina de Energia">
+	<meta name="keywords" content="HTML, CSS, Responsivo, Sites, Energia, Usina">
+	<meta name="robots" content="index, follow"> <!-- Página para motores de busca -->
+	<meta name="author" content="Brave Wolf">
+	<link rel="icon" href="images/logotipo.png">
+
+	<!--CDN do Firebase-->
+	<script src="https://www.gstatic.com/firebasejs/7.0.0/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/7.0.0/firebase-auth.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/7.0.0/firebase-database.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/7.0.0/firebase.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/7.0.0/firebase-firestore.js"></script>
+
+	<!--CDN do jsPDF-->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js"></script>
+
+	<title>Central de Energia Sustentavel</title>
+	<script src="js/InicializarFirebase.js"></script>
+	<script src="js/cadastrar.js"></script>
+	<script src="js/consumidor.js"></script>
+	<script src="js/geradorgas.js"></script>
+	<script src="js/aerogerador.js"></script>
+	<script src="js/modulovoltaico.js"></script>
+	<script src="js/simulacao.js"></script>
+	<script src="js/dashboard.js"></script>
+	<script src="js/relatorio.js"></script>
+
+	<!-- Custom fonts for this template-->
+	<link href="css\style.css" rel="stylesheet" type="text/css">
+	<link
+		href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+		rel="stylesheet">
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+		integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+
+	<!-- Custom styles for this template-->
+	<link href="css/sb-admin-2.min.css" rel="stylesheet">
+
+</head>
+
+<body id="page-top">
+
+	<!-- Page Wrapper -->
+	<div id="wrapper">
+
+		<!-- Sidebar - Menu lateral -->
+		<ul class="navbar-nav bg-gradient-dark sidebar sidebar-dark fixed-top" id="accordionSidebar">
+
+			<!-- Sidebar - Brand -->
+			<div class="sidebar-brand d-flex align-items-center justify-content-center ">
+				Consumidor
+			</div>
+
+			<div class="d-flex align-items-center justify-content-center">
+				<img class="rounded mx-auto d-block" height="100" width="100" id="imgcsmd" src="images\skyline.png">
+			</div>
+			<!-- Nav Item - Dashboard -->
+			<div class="text-center menu-lateral">
+				<span class="menu-lateral">40 mil habitantes</span>
+			</div>
+
+			<!-- Divider -->
+			<hr class="sidebar-divider">
+
+			<div class="text-center">MEDIÇÕES</div>
+
+			<!-- Heading -->
+			<div class="menu-lateral">
+				Status: <span id="statuscsmd">Desligado</span>
+				<br>
+				Tensão: <span id="tensaocsmd">0</span> V
+				<br>
+				Energia Biogás: <span id="energiabiogas">0</span> kW
+				<br>
+				Energia Eólica: <span id="energiaeolica">0</span> kW
+				<br>
+				Energia Solar: <span id="energiasolar">0</span> kW
+				<br>
+				Energia Total: <span id="totalenergia">0</span> kW
+				<br>
+				Energia: <span id="mediaenergia">0</span> kW/h
+			</div>
+
+			<!-- Divider -->
+			<hr class="sidebar-divider">
+
+			<div class="text-center">SIMULAÇÃO</div>
+
+			<!-- Heading -->
+			<div class="">
+				<form>
+					<div class="form-group">
+						<input type="text" class="form-control" id="tempo" placeholder="Tempo de simulação" />
+					</div>
+				</form>
+
+				<div class="progress">
+				  	<div class="progress-bar" id="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+				</div>
+
+				<button type="submit" class="btn btn-block btn-danger" id="startsimulacao"
+					onclick="smlc.IniciarSimulacao(document.getElementById('tempo').value)">Iniciar
+					simulação</button>
+			</div>
+
+			<!-- Divider -->
+			<hr class="sidebar-divider d-none d-md-block">
+
+		</ul>
+		<!-- End of Sidebar - Menu lateral -->
+
+		<!-- Content Wrapper -->
+		<div id="content-wrapper" class="d-flex flex-column">
+
+			<!-- Main Content -->
+			<div id="content">
+
+				<!-- Topbar - Menu Superior -->
+				<nav class="navbar navbar-expand navbar-light bg-dark topbar mb-4 static-top shadow"
+					id="barra-navegacao">
+					<ul class="navbar-nav ml-auto">
+						<li class="nav-item active">
+							<a class="nav-link" href="#">Central de Energia Sustentável </a>
+						</li>
+					</ul>
+					<!-- Topbar Navbar -->
+					<ul class="navbar-nav ml-auto">
+
+						<li class="nav-item active">
+							<button type="submit" class="btn btn-outline-light btn-menu" id="btnrelatorio"
+								onclick="gerarRelatorio()">Relatório</button>
+						</li>
+
+						<li class="nav-item active">
+							<button type="button" class="btn btn-outline-light btn-menu" data-toggle="modal"
+								data-target="#sobreModal">Sobre</button>
+						</li>
+
+						<div class="topbar-divider d-none d-sm-block "></div>
+
+						<li class="nav-item active">
+							<a class="nav-link" href="#" id="cargomenu"><span class="sr-only">(current)</span></a>
+						</li>
+
+						<div class="topbar-divider d-none d-sm-block "></div>
+
+						<!-- Nav Item - User Information -->
+						<li class="nav-item dropdown no-arrow">
+
+							<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+								data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<span class="mr-2 d-none d-lg-inline" id="emaillogado"></span>
+								<img class="img-profile rounded-circle" src="images\user.png">
+							</a>
+							<!-- Dropdown - User Information -->
+							<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in "
+								aria-labelledby="userDropdown">
+								<a class="dropdown-item" href="#" data-toggle="modal" data-target="#perfilModal">
+									<i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+									Perfil
+								</a>
+								<a class="dropdown-item" href="#">
+									<i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+									Configurações
+								</a>
+								<a class="dropdown-item" href="#" data-toggle="modal" data-target="#cadastroModal"
+									id="btncadastrar">
+									<i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+									Cadastrar
+								</a>
+								<div class="dropdown-divider"></div>
+								<a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+									<i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+									Logout
+								</a>
+							</div>
+
+						</li>
+
+					</ul>
+
+				</nav>
+				<!-- End of Topbar - Menu Superior -->
+
+				<!-- Begin Page Content -->
+				<div class="container-fluid">
+
+					<!-- Page Heading -->
+					<div class="d-sm-flex align-items-center justify-content-between mb-4 text-center">
+						<h1 class="h3 mb-0 text-gray-800">Central de Energia Sustentavel</h1>
+
+					</div>
+
+					<!-- Content Row -->
+					<div class="row">
+
+						<!-- Content Row -->
+
+						<div class="row">
+
+							<!-- Area Chart -->
+							<div class="col-xl-5 col-lg-7 ">
+								<div class="card shadow mb-4 border-left-dark">
+									<!-- Card Header - Dropdown -->
+									<div class="card-header py-3 d-flex flex-row align-items-center">
+										<img class="img-fluid rounded float-left img-maquina" id="imggb1"
+											src="images/generator.png">
+										<h6 class="m-0 font-weight-bold text-primary">Gerador Biogás 1</h6>
+									</div>
+									<!-- Card Body -->
+									<div class="card-body ">
+										<div class="row ">
+											<div class="card-body ">
+
+												Tensão: <span id="tensaogb1">0</span>V
+												<br>
+												Corrente: <span id="correntegb1">0</span>A
+												<br>
+												Frequencia: <span id="freqgb1">0</span>Hz
+												<br>
+												Status: <span id="statusgb1">Desligado</span>
+											</div>
+
+											<div class="card-body ">
+												Biogás: <span id="consumogasgb1">0</span>kw/m³
+												<br>
+												Potencia: <span id="potenciagb1">0</span>kw/h
+												<br>
+												Temperatura: <span id="tempgb1">0</span>Cº
+												<br>
+												Horimetro: <span id="horimetrogb1">0</span> horas
+											</div>
+
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="col-xl-5 col-lg-7">
+								<div class="card shadow mb-4 border-left-dark">
+									<!-- Card Header - Dropdown -->
+									<div class="card-header py-3 d-flex flex-row align-items-center  ">
+										<img class="img-fluid rounded float-left img-maquina" id="imggb2"
+											src="images\generator.png">
+										<h6 class="m-0 font-weight-bold text-primary">Gerador Biogás 2</h6>
+									</div>
+									<!-- Card Body -->
+									<div class="card-body ">
+										<div class="row ">
+											<div class="card-body ">
+
+												Tensão: <span id="tensaogb2">0</span>V
+												<br>
+												Corrente: <span id="correntegb2">0</span>A
+												<br>
+												Frequencia: <span id="freqgb2">0</span>Hz
+												<br>
+												Status: <span id="statusgb2">Desligado</span>
+											</div>
+
+											<div class="card-body ">
+												Biogás: <span id="consumogasgb2">0</span>kw/m³
+												<br>
+												Potencia: <span id="potenciagb2">0</span>kw/h
+												<br>
+												Temperatura: <span id="tempgb2">0</span>Cº
+												<br>
+												Horimetro: <span id="horimetrogb2">0</span> horas
+											</div>
+
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="col-xl-5 col-lg-7">
+								<div class="card shadow mb-4 border-left-dark">
+									<!-- Card Header - Dropdown -->
+									<div class="card-header py-3 d-flex flex-row align-items-center  ">
+										<img class="img-fluid rounded float-left img-maquina" id="imgag1"
+											src="images\windmill.png">
+										<h6 class="m-0 font-weight-bold text-primary">Aerogerador 1</h6>
+									</div>
+									<!-- Card Body -->
+									<div class="card-body ">
+										<div class="row ">
+											<div class="card-body ">
+
+												Tensão: <span id="tensaoag1">0</span>V
+												<br>
+												Corrente: <span id="correnteag1">0</span>A
+												<br>
+												Frequencia: <span id="freqag1">0</span>Hz
+												<br>
+												Status: <span id="statusag1">Desligado</span>
+											</div>
+
+											<div class="card-body ">
+												Ventos: <span id="velocidadeventoag1">0</span>m/s
+												<br>
+												Potencia: <span id="potenciaag1">0</span>kw/h
+												<br>
+												Temperatura: <span id="tempag1">0</span>Cº
+												<br>
+												Horimetro: <span id="horimetroag1">0</span> horas
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="col-xl-5 col-lg-7">
+								<div class="card shadow mb-4 border-left-dark">
+									<!-- Card Header - Dropdown -->
+									<div class="card-header py-3 d-flex flex-row align-items-center  ">
+										<img class="img-fluid rounded float-left img-maquina" id="imgag2"
+											src="images\windmill.png">
+										<h6 class="m-0 font-weight-bold text-primary">Aerogerador 2</h6>
+									</div>
+									<!-- Card Body -->
+									<div class="card-body ">
+										<div class="row ">
+											<div class="card-body ">
+
+												Tensão: <span id="tensaoag2">0</span>V
+												<br>
+												Corrente: <span id="correnteag2">0</span>A
+												<br>
+												Frequencia: <span id="freqag2">0</span>Hz
+												<br>
+												Status: <span id="statusag2">Desligado</span>
+											</div>
+
+											<div class="card-body ">
+												Ventos: <span id="velocidadeventoag2">0</span>m/s
+												<br>
+												Potencia: <span id="potenciaag2">0</span>kw/h
+												<br>
+												Temperatura: <span id="tempag2">0</span>Cº
+												<br>
+												Horimetro: <span id="horimetroag2">0</span> horas
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="col-xl-10 col-lg-7">
+								<div class="card shadow mb-4 border-left-dark">
+									<!-- Card Header - Dropdown -->
+									<div class="card-header py-3 d-flex flex-row align-items-center  ">
+										<img class="img-fluid rounded float-left img-maquina" id="imgmfv"
+											src="images\solar-panel.png">
+										<h6 class="m-0 font-weight-bold text-primary">Modulos Fotovoltaicos</h6>
+									</div>
+									<!-- Card Body -->
+									<div class="card-body ">
+										<div class="row ">
+											<div class="card-body ">
+
+												Tensão: <span id="tensaomfv">0</span>V
+												<br>
+												Corrente: <span id="correntemfv">0</span>A
+												<br>
+												Modulos Operando: <span id="quantidademfv">0</span> unindades
+												<br>
+												Status: <span id="statusmfv">Desligado</span>
+											</div>
+
+											<div class="card-body ">
+												Irradiação Solar: <span id="irradiacaomfv">0</span>W/m³
+												<br>
+												Potencia: <span id="potenciamfv">0</span>kw/h
+												<br>
+												Temperatura: <span id="temperaturamfv">0</span>Cº
+												<br>
+												Horimetro: <span id="horimetromfv">0</span> horas
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- End of Content Wrapper -->
+				</div>
+				<!-- End of Page Wrapper -->
+
+			<!-- Footer -->
+			      <footer class="sticky-footer bg-gradient-dark">
+			        <div class="container my-auto">
+			          <div class="copyright text-center my-auto">
+			          	<span>Copyright &copy; by Team Brave Wolf &nbsp;
+			          		<img class="" id="logotipo" src="images\teamwolf.png">
+			          	</span>
+			          </div>
+			        </div>
+			      </footer>
+
+				<!-- Logout Modal-->
+				<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+					aria-hidden="true">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title col-md-10" id="exampleModalLabel">Deseja sair?</h5>
+								<button class="close" type="button" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true" class="sair">X</span>
+								</button>
+							</div>
+							<div class="modal-body">Tem certeza que deseja encerrar a sessão atual?</div>
+							<div class="modal-footer">
+								<button class="btn btn-secondary col-md-5" type="button"
+									data-dismiss="modal">Cancelar</button>
+								<a href="" class="col-md-6"><button class="btn btn-danger col-md-12"
+										onclick="logout()">Logout</button></a>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!--Cadastro Modal-->
+				<div class="modal fade" id="cadastroModal" tabindex="-1" role="dialog"
+					aria-labelledby="exampleModalLabel" aria-hidden="true">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header col-md-12">
+								<h4 class="modal-title col-md-10" id="exampleModalLabel">Cadastro de Usuários:</h4>
+								<button class="close" type="button" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true" class="sair">X</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<form>
+									<div class="form-group">
+										<label for="exampleInputEmail1">Endereço de E-mail:</label>
+										<input type="email" class="form-control" id="cademail"
+											aria-describedby="emailHelp" placeholder="Insira seu e-mail">
+									</div>
+									<div class="form-group">
+										<label for="exampleInputPassword1">Senha:</label>
+										<input type="password" class="form-control" id="cadpassword"
+											placeholder="Insira sua senha">
+									</div>
+									<div class="form-group col-md-12">
+										<label for="inputState">Cargo</label>
+										<select id="cadcargo" class="form-control">
+											<option selected value="1">Operador</option>
+											<option value="2">Coordenador</option>
+											<option value="3">Gerente</option>
+										</select>
+									</div>
+								</form>
+							</div>
+							<div class="modal-footer">
+								<!-- Rodapé do modal-->
+								<button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+								<button class="btn btn-success" href="#" onclick="CadastroFirebase()">Confirmar</button>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!--Modal Sobre-->
+				<div class="modal fade" id="sobreModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+					aria-hidden="true">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title col-md-10" id="exampleModalLabel">Sobre o projeto</h5>
+								<button class="close" type="button" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true" class="sair">X</span>
+								</button>
+							</div>
+							<div class="modal-body">
+							<p> Esta aplicação tem como objetivo simular a operação de uma usina sustentável
+								com equipamentos que não agritem o meio ambiente.</p>
+								<p>Como forma de simplificar o projeto, as horas de operação são
+									contadas em segundos.</p>
+								<p>Ao final de cada simulação será possivel gerar um relatório com os dados
+									de produção de energia.</p>
+									<p>Níveis de permissões para usuários: <br>
+										Operador: executar simulação. <br>
+										Coordenador: executar simulação e gerar relatório. <br>
+										Gerente: executar simulação, gerar relatório e cadastrar novos usuários.
+									</p>
+							</div>
+							<div class="modal-footer">
+								<button class="btn btn-outline-primary col-md-12"
+									data-dismiss="modal">Confirmar</button>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!--Modal Perfil-->
+				<div class="modal fade" id="perfilModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+					aria-hidden="true">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header col-md-12">
+								<h4 class="modal-title col-md-10" id="exampleModalLabel">Atualizar Cadastro:</h4>
+								<button class="close" type="button" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true" class="sair">X</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<form>
+									<div class="form-group">
+										<label for="exampleInputEmail1">Nome:</label>
+										<input type="email" class="form-control" id="updatename"
+											aria-describedby="emailHelp" placeholder="Insira seu nome">
+									</div>
+									<div class="form-group">
+										<label for="exampleInputPassword1">Imagem:</label>
+										<input type="file" class="form-control btn btn-primary" id="updateimg"
+											placeholder="Insira sua imagem" multiple>
+									</div>
+									<div class="form-group">
+										<label for="exampleInputPassword1">Validar E-mail:</label>
+										<input onclick="validarEmail()" id="ValidarEmail" class="btn btn-primary"
+											value="Validar E-mail">
+									</div>
+								</form>
+							</div>
+							<div class="modal-footer">
+								<!-- Rodapé do modal-->
+								<button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+								<button class="btn btn-success" href="#" onclick="updateUser()">Confirmar</button>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Bootstrap core JavaScript-->
+				<script src="js\bootstrap.bundle.min.js"></script>
+			</div>
+</body>
+
+</html>

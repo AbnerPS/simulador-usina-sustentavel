@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Controle de Usina de Energia">
+  <meta name="keywords" content="HTML, CSS, Responsivo, Sites, Energia, Usina">
+  <meta name="robots" content="index, follow"> <!-- Página para motores de busca -->
+  <meta name="author" content="Brave Wolf">
+  <title>Login - Central de Usina Sustentável</title>
+  <link rel="icon" href="images/logotipo.png">
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/7.0.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.0.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.0.0/firebase-database.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/4.12.1/firebase.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/4.12.1/firebase-firestore.js"></script>
+
+  <!--Arquivo com os parametros de autentificação-->
+  <script src="js/InicializarFirebase.js"></script>
+  <script src="js/authentication.js"></script>
+  <script src="js/qrcode.min.js"></script>
+</head>
+
+<body>
+
+  <header id="titulo">
+    <h1>Central de Energia Sustentável</h1>
+  </header>
+
+  <div id="login">
+    <img src="images/logotipo.png" />
+    <form name="form" enctype="multipart/form-data">
+      <span>&nbspE-mail:</span>
+      <input type="email" id="email" name="email" placeholder="Digite seu E-mail" minlength="10" />
+      <span>&nbspSenha:</span>
+      <input type="password" id="password" name="password" placeholder="Digite sua senha" minlength="8" /></td>
+      <button id="quickstart-sign-in" name="signin">Entrar</button>
+      <button id="quickstart-password-reset" name="verify-email">Redefinir senha</button>
+    </form>
+  </div>
+
+  <!-- Modal -->
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h3>Valide seu QRCode:</h3>
+      <pre id="pre">
+        </pre>
+    </div>
+  </div>
+
+</body>
+
+</html>
