@@ -1,22 +1,26 @@
-# Simulador de Usina Sustentável
+# Simulador de Usina SustentÃ¡vel
 
-Este projeto tem como objetivo **simular** de forma simples a operação de uma usina de geração de energia sustentável.
+Este projeto tem como objetivo **simular** de forma simples a operaÃ§Ã£o de uma usina de geraÃ§Ã£o de energia sustentÃ¡vel.
 
 # Como funciona
-A aplicação é dividida em app mobile que é responsável pelo autentificação e liberação de acesso e a pagina web onde a aplicação principal roda.
+A aplicaÃ§Ã£o Ã© dividida em app mobile que Ã© responsÃ¡vel pelo autentificaÃ§Ã£o e liberaÃ§Ã£o de acesso e a pagina web onde a aplicaÃ§Ã£o principal roda.
 
 ## No aplicativo mobile
-Nele você faz seu login e se autentifica via impressão digital. Após isso o app solicitará que você escaneie seu QRCode que aparecera na pagina web após realizar o login nela.
+Nele vocÃª faz seu login e se autentifica via impressÃ£o digital. ApÃ³s isso o app solicitarÃ¡ que vocÃª escaneie seu QRCode que aparecera na pagina web apÃ³s realizar o login nela.
 
 ## Na pagina web
-Na pagina index você faz seu login com e-mail e senha e escaneara o QRCode com o app mobile para ser redirecionado para a dashboard.
-Na dashboard você poderá executar as funcionalidades da aplicação dependendo do nível de acesso do seu usuário que são:
-- **Operador**: permissão apenas para executar a simulação
-- **Coordenador**: permissão para executar a simulação e gerar um relatório
-- **Gerente**: permissão para executar a simulação, gerar relatório e cadastrar novos usuários
+Na pagina index vocÃª faz seu login com e-mail e senha e escaneara o QRCode com o app mobile para ser redirecionado para a dashboard.
+Na dashboard vocÃª poderÃ¡ executar as funcionalidades da aplicaÃ§Ã£o dependendo do nÃ­vel de acesso do seu usuÃ¡rio que sÃ£o:
+- **Operador**: permissÃ£o apenas para executar a simulaÃ§Ã£o
+- **Coordenador**: permissÃ£o para executar a simulaÃ§Ã£o e gerar um relatÃ³rio
+- **Gerente**: permissÃ£o para executar a simulaÃ§Ã£o, gerar relatÃ³rio e cadastrar novos usuÃ¡rios
 
-No painel lateral esquerdo você pode inserir um valor de tempo (em segundos) para a simulação. Como modo de simplificar o projeto, os segundos de operação são considerados como horas.
-No termino de cada simulação você pode gerar um relatório em pdf com os dados de produção.
+No painel lateral esquerdo vocÃª pode inserir um valor de tempo (em segundos) para a simulaÃ§Ã£o. Como modo de simplificar o projeto, os segundos de operaÃ§Ã£o sÃ£o considerados como horas.
+No termino de cada simulaÃ§Ã£o vocÃª pode gerar um relatÃ³rio em pdf com os dados de produÃ§Ã£o.
+
+## Login para testes
+**Email**: teste@teste.com
+**Senha**: 123456789
 
 # Tecnologias usados
 
