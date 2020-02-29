@@ -1,20 +1,21 @@
-
-function AeroGerador(tag) {
+function ModuloFotovoltaico(tag) {
     this.tag = tag;
-    this.modelo = "HF57.0";
-    var frequencia = 60;
-    var tensao;
-    var corrente;
-    var velocidadevento = 30;
-    var status = "Desligado";
-    var horimetro = 0;
-    var energia = 0;
-    var potencia;
-    var energiaproduzida = 0;
-    var temperatura;
-    var segundos = 0;
-    var minutos = 0;
-    var horas = 0;
+    this.modelo = "CS3W-400P";
+    let quantidade = 250;
+    let frequencia = 60; //Hz
+    let tensao = 38; //DC
+    let corrente = 10; //A
+    let eficiencia = 18; //%
+    let status = "Desligado";
+    let irradiacaosolar;  // W/m³
+    let temperatura = 65;
+    let potencia; // W
+    let energiaproduzida = 0;
+    let horimetro = 0; // Horas
+    let energia;
+    let segundos = 0;
+    let minutos = 0;
+    let horas = 0;
     this.Ligar = Ligar;
     this.relogio = relogio;
 
@@ -34,10 +35,10 @@ function AeroGerador(tag) {
     function Ligar(tempo) {
         if (tempo > 0 && status == "Desligado") {
             status = "Ligado"
-            document.getElementById("img" + tag).src = "images/windmill color.png";
+            document.getElementById("img" + tag).src = "images/solar-panel color.png";
             document.getElementById('status' + tag).innerHTML = status;
-            var tempototal = tempo; //diferencia de tempo inicial e final
-            var intervalo = setInterval(function () {
+            let tempototal = tempo; //diferencia de tempo inicial e final
+            const intervalo = setInterval(() => {
                 horimetro = ++horimetro;
                 tempo = --tempo;
                 // Parametros de exibição em tempo real
@@ -46,9 +47,10 @@ function AeroGerador(tag) {
                 if (tempo <= 0) { // Se o tempo acabou
                     clearInterval(intervalo);
                     status = "Desligado"
-                    document.getElementById("img" + tag).src = "images/windmill.png";
+                    document.getElementById("img" + tag).src = "images/solar-panel.png";
                     document.getElementById('status' + tag).innerHTML = status;
                     document.getElementById('horimetro' + tag).innerHTML = horimetro;
+
                     energia = energiaproduzida / tempototal; // Gera valor de energia total produzida por hora
 
                     //Armagena os dados no Realime Database
@@ -56,7 +58,8 @@ function AeroGerador(tag) {
                         tag: tag,
                         tensao: tensao,
                         horimetro: horimetro,
-                        velocidadevento: velocidadevento,
+                        quantidade: quantidade,
+                        irradiacaosolar: irradiacaosolar,
                         energiaproduzida: energiaproduzida,
                         energia: energia.toFixed(2)
                     });
@@ -64,44 +67,43 @@ function AeroGerador(tag) {
                 } else { // Se o tempo ainda não acabou
 
                     // Gerando variação de temperatura
-                    min = Math.ceil(50);
-                    max = Math.floor(61);
-                    temperatura = Math.floor(Math.random() * (max - min)) + min; // gera valor de potencia atual
-                    document.getElementById('temp' + tag).innerHTML = temperatura;
+                    min = Math.ceil(25);
+                    max = Math.floor(31);
+                    temperatura = Math.floor(Math.random() * (max - min)) + min;
+                    document.getElementById('temperatura' + tag).innerHTML = temperatura;
 
                     // Gerando variação de de tensão
                     min = Math.ceil(379);
-                    max = Math.floor(383);
-                    tensao = Math.floor(Math.random() * (max - min)) + min; // gera valor de potencia atual
+                    max = Math.floor(382);
+                    tensao = Math.floor(Math.random() * (max - min)) + min;
                     document.getElementById('tensao' + tag).innerHTML = tensao;
 
-                    // Gerando variação de potencia
-                    min = Math.ceil(490);
-                    max = Math.floor(501);
+                    // Gerando variação de irradiação solar
+                    min = Math.ceil(860);
+                    max = Math.floor(901);
+                    irradiacaosolar = Math.floor(Math.random() * (max - min)) + min;
+                    document.getElementById('irradiacao' + tag).innerHTML = irradiacaosolar;
+
+                    // Gerando variação de potencia, porém esse valor esta em kW e precisa ficar em W
+                    min = Math.ceil(90);
+                    max = Math.floor(101);
                     potencia = Math.floor(Math.random() * (max - min)) + min; // gera valor de potencia atual
                     energiaproduzida = energiaproduzida + potencia; // Adiciona valor para energia total produzida
                     document.getElementById('potencia' + tag).innerHTML = potencia;
 
                     // Gerando variação de corrente
-                    corrente = (potencia * 100) / tensao; // gera valor de potencia atual
+                    corrente = (potencia * 100) / tensao;
                     document.getElementById('corrente' + tag).innerHTML = corrente.toFixed(2);
 
-                    document.getElementById('freq' + tag).innerHTML = frequencia;
+                    document.getElementById('quantidade' + tag).innerHTML = quantidade;
 
-                    // Gerando variação de velocidade dos ventos
-                    min = Math.ceil(25);
-                    max = Math.floor(31);
-                    velocidadevento = Math.floor(Math.random() * (max - min)) + min; // gera valor de potencia atual
-                    document.getElementById('velocidadevento' + tag).innerHTML = velocidadevento;
-
-                    //Armagena os dados no Realime Database
                     firebase.database().ref("Geradores/" + tag).set({
                         tag: tag,
                         tensao: tensao,
                         horimetro: horimetro,
-                        velocidadevento: velocidadevento,
-                        energiaproduzida: energiaproduzida,
-                        energia: energia.toFixed(2)
+                        quantidade: quantidade,
+                        irradiacaosolar: irradiacaosolar,
+                        energiaproduzida: energiaproduzida
                     });
                 }
             }, 1000);

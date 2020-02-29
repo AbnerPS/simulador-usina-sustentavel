@@ -1,9 +1,9 @@
 // Cria cadastro
 function CadastroFirebase() {
 
-    var cademail = document.getElementById('cademail').value;
-    var cadpassword = document.getElementById('cadpassword').value;
-    var cadcargo = document.getElementById('cadcargo').value;
+    let cademail = document.getElementById('cademail').value;
+    let cadpassword = document.getElementById('cadpassword').value;
+    let cadcargo = document.getElementById('cadcargo').value;
 
     if (cademail.length < 10) {
         alert('O E-mail deve ter no mínimo 10 caracteres!');
@@ -15,8 +15,8 @@ function CadastroFirebase() {
     }
     // Cadastro
     firebase.auth().createUserWithEmailAndPassword(cademail, cadpassword).catch(function (error) {
-        var errorCode = error.code;
-        var errorMessage = error.message;
+        let errorCode = error.code;
+        let errorMessage = error.message;
 
         if (errorCode === 'auth/wrong-password') { // Se a senha estiver inválida
             alert('Senha inválida, por favor tente novamente!');
@@ -29,10 +29,10 @@ function CadastroFirebase() {
     });
 
     // Convertendo para Base64
-    var emBase64 = btoa(cademail);
+    let emBase64 = btoa(cademail);
 
     // Voltando para string
-    //var deBase64 = atob(emBase64);
+    //let deBase64 = atob(emBase64);
     //console.log("Descriptografado: " + deBase64);
 
     //gravando no banco

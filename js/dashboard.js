@@ -1,11 +1,11 @@
-var csmd = new Consumidor("csmd");
-var gb1 = new GeradorBiogas("gb1");
-var gb2 = new GeradorBiogas("gb2");
-var ag1 = new AeroGerador("ag1");
-var ag2 = new AeroGerador("ag2");
-var mfv = new ModuloFotovoltaico("mfv");
-var smlc = new Simulacao();
-var displayName, email, emailbase64, emailVerified, photoURL, isAnonymous, uid, providerData;
+let csmd = new Consumidor("csmd");
+let gb1 = new GeradorBiogas("gb1");
+let gb2 = new GeradorBiogas("gb2");
+let ag1 = new AeroGerador("ag1");
+let ag2 = new AeroGerador("ag2");
+let mfv = new ModuloFotovoltaico("mfv");
+let smlc = new Simulacao();
+let displayName, email, emailbase64, emailVerified, photoURL, isAnonymous, uid, providerData;
 
 // Firebase
 firebase.auth().onAuthStateChanged(function (user) {
@@ -41,18 +41,18 @@ firebase.auth().onAuthStateChanged(function (user) {
                 document.getElementById("cargomenu").innerHTML = 'Operador';
 
                 // Remove o botão de relatório
-                var btnrelatorio = document.getElementById('btnrelatorio')
+                let btnrelatorio = document.getElementById('btnrelatorio')
                 btnrelatorio.parentNode.removeChild(btnrelatorio)
 
                 // Remove o botão de cadastro
-                var btncadastrar = document.getElementById('btncadastrar')
+                let btncadastrar = document.getElementById('btncadastrar')
                 btncadastrar.parentNode.removeChild(btncadastrar)
             } else if (snapshot.val() == 2) { // Se for Coordenador
                 // Exibe cargo
                 document.getElementById("cargomenu").innerHTML = 'Coordenador';
 
                 // Remove o botão de cadastro
-                var btncadastrar = document.getElementById('btncadastrar')
+                let btncadastrar = document.getElementById('btncadastrar')
                 btncadastrar.parentNode.removeChild(btncadastrar)
             } else if (snapshot.val() == 3) { // Se for Gerente
                 // Exibe cargo
@@ -74,15 +74,15 @@ function logout() {
 
 function updateUser() {
     // Cria referência raiz no storage
-    var storageRef = firebase.storage().ref();
+    let storageRef = firebase.storage().ref();
 
     // Cria referência para o ID do usuário
-    var userRef = storageRef.child(uid);
+    let userRef = storageRef.child(uid);
 
     // Cria referência para o caminho da imagem
-    var userImageRef = userRef.child('images/' + uid);
+    let userImageRef = userRef.child('images/' + uid);
 
-    var file = document.getElementById('updateimg').files[0];// use the Blob or File API
+    let file = document.getElementById('updateimg').files[0];// use the Blob or File API
     userImageRef.put(file).then(function (snapshot) {
         console.log('Uploaded a blob or file!');
     });

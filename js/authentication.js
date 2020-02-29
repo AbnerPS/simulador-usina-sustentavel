@@ -148,10 +148,8 @@ function initApp() {
   // Escutando alterações de estado de autenticação.
   firebase.auth().onAuthStateChanged(function (user) {
     if (user) { // Se estiver logado.
-
     }
   });
-
   document.getElementById('quickstart-sign-in').addEventListener('click', toggleSignIn, false);
   document.getElementById('quickstart-password-reset').addEventListener('click', sendPasswordReset, false);
 }

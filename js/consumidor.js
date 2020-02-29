@@ -1,18 +1,18 @@
 function Consumidor(tag) {
 	this.tag = tag;
 	this.habitantes = 40000;
-	var status = "Desligado";
-	var tempoperacao;
-	var tensao;
-	var energiagb1;
-	var energiagb2;
-	var energiabiogas;
-	var energiaag1;
-	var energiaag2;
-	var energiaeolica;
-	var energiasolar;
-	var mediaenergia;
-	var totalenergia;
+	let status = "Desligado";
+	let tempoperacao;
+	let tensao;
+	let energiagb1;
+	let energiagb2;
+	let energiabiogas;
+	let energiaag1;
+	let energiaag2;
+	let energiaeolica;
+	let energiasolar;
+	let mediaenergia;
+	let totalenergia;
 	this.Ligar = Ligar;
 
 	function getDados() {
@@ -63,7 +63,7 @@ function Consumidor(tag) {
 			document.getElementById('status' + tag).innerHTML = status;
 			document.getElementById("img" + tag).src = "images/skyline color.png";
 			tempoperacao = tempo;
-			var intervalo = setInterval(function () {
+			const intervalo = setInterval(() => {
 				tempo = --tempo;
 				document.getElementById('tempo').value = tempo + " s";
 				if (tempo <= 0) {
@@ -83,7 +83,6 @@ function Consumidor(tag) {
 						totalenergia: totalenergia,
 						mediaenergia: mediaenergia.toFixed(2)
 					});
-
 				} else {
 					getDados();
 				}

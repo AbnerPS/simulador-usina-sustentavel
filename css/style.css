@@ -5,6 +5,31 @@ body {
   color: #ffffff;
 }
 
+/**********Barra de progresso**********/
+progress {
+  display:block;
+  -webkit-appearance: none;
+  width: 100%;
+  margin-top: -10px;
+  margin-bottom: 5px;
+}
+
+progress::-webkit-progress-bar {
+    background: #ffffff;
+    border-radius: 50px;
+    padding: 1px;
+}
+progress::-moz-progress-bar {  
+    background: black;
+    border-radius: 50px;
+    padding: 1px;
+}
+
+progress::-webkit-progress-value {
+    border-radius: 50px;
+    background: #ff3f3f;
+}
+
 #titulo {
   width: 40%;
   height: auto;
@@ -146,7 +171,14 @@ footer {
   color: #ffffff;
 }
 
-.progress {
-  margin-top: -10px;
-  margin-bottom: 5px;
+.navbar h3{
+  color: #ffffff;
+}
+
+.navbar span {
+  color: #ffffff;
+}
+
+#cargomenu {
+  color: #ffffff;
 }
