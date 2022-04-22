@@ -1,2 +1,0 @@
-include ':app'
-rootProject.name='Controle de Usina de Energia'
