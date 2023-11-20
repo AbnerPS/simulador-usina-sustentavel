@@ -1,8 +1,36 @@
-import { Gerador } from "./gerador.js";
+function GeradorBiogas(tag) {
+    this.tag = tag;
+    this.modelo = "G3512E";
+    let frequencia = 60;
+    let tensao;
+    let corrente;
+    let status = "Desligado";
+    let horimetro = 0;
+    let temperatura;
+    let consumogas = 3;
+    let energia = 0;
+    let potencia;
+    let energiaproduzida = 0;
+    let segundos = 0;
+    let minutos = 0;
+    let horas = 0;
+    this.Ligar = Ligar;
+    this.relogio = relogio;
 
-export class GeradorBiogas extends Gerador {
+    function relogio() {
+        ++segundos;
+        if (segundos === 60) {
+            segundos = 0;
+            minutos++;
+        }
+        if (minutos === 60) {
+            minutos = 0;
+            horas++;
+        }
+        return horas + ":" + minutos + ":" + segundos;
+    }
 
-    ligar(tempo: number) {
+    function Ligar(tempo) {
         if (tempo > 0 && status == "Desligado") {
             status = "Ligado"
             document.getElementById("img" + tag).src = "images/generator color.png";

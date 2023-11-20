@@ -1,8 +1,21 @@
-import { Gerador } from "./gerador.js";
+function Consumidor(tag) {
+	this.tag = tag;
+	this.habitantes = 40000;
+	let status = "Desligado";
+	let tempoperacao;
+	let tensao;
+	let energiagb1;
+	let energiagb2;
+	let energiabiogas;
+	let energiaag1;
+	let energiaag2;
+	let energiaeolica;
+	let energiasolar;
+	let mediaenergia;
+	let totalenergia;
+	this.Ligar = Ligar;
 
-export class Consumidor extends Gerador {
-
-	getDados() {
+	function getDados() {
 		// Gerando variação de de tensão
 		min = Math.ceil(379);
 		max = Math.floor(382);
@@ -44,7 +57,7 @@ export class Consumidor extends Gerador {
 		document.getElementById('mediaenergia').innerHTML = mediaenergia.toFixed(2);
 	}
 
-	ligar(tempo: number) {
+	function Ligar(tempo) {
 		if (tempo > 0) {
 			status = "Ligado"
 			document.getElementById('status' + tag).innerHTML = status;
